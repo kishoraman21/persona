@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from "axios"
+import ReactMarkdown from "react-markdown";
 
 export default function HiteshAIChat() {
   const [messages, setMessages] = useState([
@@ -13,6 +14,7 @@ export default function HiteshAIChat() {
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -41,10 +43,11 @@ export default function HiteshAIChat() {
   const currentInput = input;
   setInput('');
   setIsTyping(true);
-  const api = import.meta.env.Backend_url
+  const api = import.meta.env.VITE_BACKEND_URL;
+
 
   try {
-    const response = await axios.post(api/chat, {
+    const response = await axios.post(`${api}/chat`, {
       message: currentInput,
     });
 
@@ -67,7 +70,7 @@ export default function HiteshAIChat() {
     const errorMessage = {
       id: messages.length + 2,
       type: 'bot',
-      text: "Sorry, I'm having trouble connecting right now. Please check if the backend server is running on http://localhost:8000",
+      text: "Sorry, I'm having trouble connecting right now. Please check if the backend server is running.",
       timestamp: new Date().toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit'
@@ -97,6 +100,11 @@ export default function HiteshAIChat() {
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
     ]);
+    setShowModal(false);
+  };
+
+  const handleBackToHome = () => {
+    window.location.href = '/';
   };
 
   return (
@@ -105,6 +113,15 @@ export default function HiteshAIChat() {
       <header className="backdrop-blur-md bg-gray-900/80 border-b border-amber-900/20">
         <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
+            <button 
+              onClick={handleBackToHome}
+              className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+              </svg>
+              
+            </button>
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-600 to-orange-600 flex items-center justify-center text-white font-bold text-sm shadow-lg">
               HC
             </div>
@@ -114,7 +131,7 @@ export default function HiteshAIChat() {
             </div>
           </div>
           <button 
-            onClick={handleNewChat}
+            onClick={() => setShowModal(true)}
             className="px-4 py-2 text-gray-400 hover:text-white transition-colors text-sm"
           >
             New Chat
@@ -156,7 +173,9 @@ export default function HiteshAIChat() {
                         : 'bg-gray-800/80 backdrop-blur-sm text-gray-100 border border-amber-900/20'
                     }`}
                   >
-                    <p className="text-base leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                    <div className="text-base leading-relaxed break-words overflow-wrap-anywhere">
+                      <ReactMarkdown>{message.text}</ReactMarkdown>
+                    </div>
                     <p className={`text-xs mt-2 ${message.type === 'user' ? 'text-amber-100' : 'text-gray-500'}`}>
                       {message.timestamp}
                     </p>
@@ -217,6 +236,36 @@ export default function HiteshAIChat() {
           </p>
         </div>
       </div>
+
+      {/* New Chat Confirmation Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-gray-800 border border-amber-900/30 rounded-2xl p-6 max-w-md mx-4 shadow-2xl"
+          >
+            <h3 className="text-xl font-bold text-white mb-3">Start New Chat?</h3>
+            <p className="text-gray-300 mb-6">
+              This will clear your current conversation. Are you sure you want to start a new chat?
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-5 py-2 bg-gray-700 text-white rounded-lg font-medium hover:bg-gray-600 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleNewChat}
+                className="px-5 py-2 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-lg font-medium hover:from-amber-700 hover:to-orange-700 transition-all"
+              >
+                Start New Chat
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }
