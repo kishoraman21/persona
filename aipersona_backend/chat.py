@@ -16,11 +16,11 @@ def getResponse(message: str):
     ]
 
     response = client.models.generate_content_stream(
-        model="gemini-2.5-flash",
+        model="gemini-2.5-flash-lite",
         contents=chat_msg,
-        config=types.GenerateContentConfig(
-            max_output_tokens=130,
-        ),
+        # config=types.GenerateContentConfig(
+        #     max_output_tokens=500,
+        # ),
     )
 
     full_response = ""
@@ -28,5 +28,5 @@ def getResponse(message: str):
         if chunk.text:
             full_response += chunk.text
 
-    # print("Response:", full_response)
+    print("Response:", full_response)
     return full_response
