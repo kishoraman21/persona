@@ -79,26 +79,7 @@ export default function LandingPage() {
                
               </motion.div>
 
-              {/* Stats */}
-              <motion.div 
-                className="grid grid-cols-3 gap-8 pt-12 max-w-lg"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.9 }}
-              >
-                <div>
-                  <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-500">24/7</div>
-                  <div className="text-gray-400 text-sm mt-1">Always Available</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-500">∞</div>
-                  <div className="text-gray-400 text-sm mt-1">Unlimited Queries</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-500">Instant</div>
-                  <div className="text-gray-400 text-sm mt-1">Response Time</div>
-                </div>
-              </motion.div>
+            
             </motion.div>
 
             {/* Image Section */}
