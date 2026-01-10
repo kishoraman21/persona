@@ -10,8 +10,8 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_headers=["*"],
-    allow_origins=["https://personaai.apideck.site", "http://localhost:3000"],
-    allow_credentials=False,
+    allow_origins=["https://personaai.apideck.site"], 
+    allow_credentials=True,
     allow_methods=["*"],
 )
 
