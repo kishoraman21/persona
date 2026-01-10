@@ -85,7 +85,9 @@ export default function HiteshAIChat() {
 
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    // Only trigger send on desktop (when Enter is pressed without Shift)
+    // On mobile, let the default behavior handle new lines
+    if (e.key === 'Enter' && !e.shiftKey && window.innerWidth >= 640) {
       e.preventDefault();
       handleSend();
     }
@@ -273,7 +275,8 @@ export default function HiteshAIChat() {
             </button>
           </div>
           <p className="text-xs text-gray-500 mt-2 sm:mt-3 text-center">
-            Press Enter to send • Shift + Enter for new line
+            <span className="hidden sm:inline">Press Enter to send • Shift + Enter for new line</span>
+            <span className="sm:hidden">Tap Send button to send message</span>
           </p>
         </div>
       </div>
