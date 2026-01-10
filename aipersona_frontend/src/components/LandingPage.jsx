@@ -71,11 +71,6 @@ export default function LandingPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.7 }}
               >
-                <button
-                onClick={()=>route("/chat")}
-                 className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-lg font-semibold hover:from-amber-700 hover:to-orange-700 transition-all transform hover:scale-105 shadow-xl shadow-amber-900/50 text-sm sm:text-base">
-                  Start Chatting
-                </button>
                
               </motion.div>
 
