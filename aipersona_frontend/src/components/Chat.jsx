@@ -130,12 +130,17 @@ export default function HiteshAIChat() {
               <p className="text-xs text-gray-400">Online • Ready to help</p>
             </div>
           </div>
-          <button 
-            onClick={() => setShowModal(true)}
-            className="px-4 py-2 text-gray-400 hover:text-white transition-colors text-sm"
-          >
-            New Chat
-          </button>
+          <div className="flex items-center gap-4">
+            <p className="text-xs text-gray-400">
+              Initial response could be delayed • Backend hosted on Render is warming up
+            </p>
+            <button 
+              onClick={() => setShowModal(true)}
+              className="px-4 py-2 bg-amber-600/20 border border-amber-700/50 text-amber-500 hover:bg-amber-600/30 transition-colors text-sm rounded-lg font-medium"
+            >
+              New Chat
+            </button>
+          </div>
         </div>
       </header>
 
